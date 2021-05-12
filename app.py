@@ -1,10 +1,11 @@
 from flask import Flask, make_response, request
-import csv
 import pandas as pd
 import hashlib
 import io
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def hash_csv(csv_file):
     # return text_file_contents.replace("-", ",")
@@ -70,7 +71,7 @@ def hash_data():
     # response = make_response(result)
     response = make_response(result)
     response.headers["Content-Disposition"] = "attachment; filename=hashed_students.csv"
-    response.headers["Content=Type"] = "text/csv"
+    response.headers["Content-Type"] = "text/csv"
     return response
 
 if __name__ == "__main__":
