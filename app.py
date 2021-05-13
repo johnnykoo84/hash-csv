@@ -17,13 +17,15 @@ def hash_csv(csv_file):
 
     print('!!!!!!!df here', df)
     # hashing the 'Password' column
-    df['name'] = df['name'].apply(lambda x: \
+    if 'name' in df.columns:
+        df['name'] = df['name'].apply(lambda x: \
             hashlib.sha256(x.encode('utf-8')).hexdigest())
-
-    df['mobile'] = df['mobile'].apply(lambda x: \
+    if 'mobile' in df.columns:
+        df['mobile'] = df['mobile'].apply(lambda x: \
             hashlib.sha256(x.encode('utf-8')).hexdigest())
-
-    df['email'] = df['email'].apply(lambda x: \
+    
+    if 'email' in df.columns:
+        df['email'] = df['email'].apply(lambda x: \
             hashlib.sha256(x.encode('utf-8')).hexdigest())
 
 
@@ -42,8 +44,9 @@ def form():
         <h1>CSV 파일 데이터 단방향 암호화</h1>
         <div>1. 파일 선택 후, 암호화 실행 버튼을 눌러주세요</div>
         <div>2. 정상적인 파일 형식인 경우 암호화된 csv 파일을 다운로드 받을 수 있습니다.</div>
-        <div>주의: 업로드할 CSV 파일의 처음 3개의 칼럼은 name, mobile, email 이어야 합니다. </div>
-        <div>기타: 첫 3개 칼럼 이후 추가 칼럼은 가지고 있어도 상관 없습니다. </div>
+        <div>주의: 업로드할 CSV 파일의 처음 3개 칼럼 data만 암호화 합니다. </div>
+        <div>기타: 첫 3개 칼럼 이후 추가 칼럼 data는 암호화하지 않습니다. </div>
+        <div>e.g. 칼럼은 다음과 같을 수 있겠습니다. name, mobile, email, etc1, etc2</div>
         <form method=post action="/hash" enctype=multipart/form-data>
         <p><input type=file name=data_file></p>
         <p><input type=submit value=암호화_실행></p>
